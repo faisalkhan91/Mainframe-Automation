@@ -1,0 +1,29 @@
+# Default Settings
+default:
+    host: 'wdc3270'
+    system: ''
+    wait: 1
+    mode: 'Slow'  # Default: Normal, Use 'Slow' for slower execution
+    copy_logfile: 'OFF'  # Use 'ON' to enable log copy function
+    execution_log: 'ON'  # Use 'OFF" to disable writing of execution logs
+
+# Authorization
+credentials:
+    user: USER
+    password: PASSWORD
+
+# Log file directory
+logs:
+    metric: 'logs\\Metric'
+    detail: 'logs\\Detailed'
+    execution: 'logs\\Execution'
+
+# Log filename, e.g. '\\XXXXXXX'
+files:
+    metric_filename: '\\Metric_Logs'
+    detail_filename: '\\Detailed_Logs_'
+    execution_filename: '\\Script_Execution_'
+
+# Detail log configuration
+detail:
+    app_name: 'Example'
