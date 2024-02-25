@@ -39,4 +39,30 @@ def main():
     # Detail log parameters
     detail_log_list = []
 
-    #
+    # Connection Sequence
+    step_num = 1
+    step_desc = "Launch SRO Application"
+    start = get_time()
+    em.connect(cfg["default"]["host"])
+    # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x00')
+    detail_log_list.append([timestr, step_num, step_desc, start, get_time(), 'x00'])
+
+    # Login
+    step_num = 2
+    step_desc = "Login"
+    start = get_time()
+    em.fill_field(24, 25, cfg["default"]["system"], 4)
+    em.send_enter()
+    time.sleep(wait_time)
+    em.fill_field(12, 21, cfg["credentials"]["user"], 4)  # Mainframe Id
+    time.sleep(slow_mode)
+    em.send_enter()
+    em.fill_field(13, 21, cfg["credentials"]["password"], 8)  # Mainframe Password
+    time.sleep(slow_mode)
+    em.send_enter()
+    time.sleep(wait_time)
+    # Login Success/Failure
+    if em.string_found(5, 30, 'SIGNON OK'):
+        print('Login successful.')
+        # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x00')
+        detail_log_list.append([timestr, step_num, step_desc, start, get_time(), 'x00'])
