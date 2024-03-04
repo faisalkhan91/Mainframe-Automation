@@ -1,9 +1,8 @@
-$Folder = "$PSSCriptRoot\..\logs"
+$Folder = "$PSScriptRoot\..\logs"
 
 # Delete files older than 7 Days
-
 Get-ChildItem $Folder -Recurse -Force -ea 0 |
-? {!$_PsIsContainer -and $_.LastWriteTime -lt (Get-date).AddDays(-7)} |
+? {!$_.PsIsContainer -and $_.LastWriteTime -lt (Get-Date).AddDays(-7)} |
 ForEach-Object {
     $_ | del -Force
     $_.FullName | Out-File "$PSScriptRoot\..\logs\Clear" -Append
