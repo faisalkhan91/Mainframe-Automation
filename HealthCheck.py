@@ -8,6 +8,7 @@ from modules.MetricLog import *
 from modules.DetailLog import *
 from modules.ExecutionLog import *
 from modules.LogCopy import *
+#from modules.Retry import *
 
 
 def get_time():
@@ -25,7 +26,7 @@ def main():
     with open("config/config.yml", "r") as ymlfile:
         cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
     
-    # raise ValueError("A very specific bad thing happened.")  # to raise exception for testing.
+    # raise ValueError('A very specific bad thing happened.')  # To raise exception for testing.
         
     # Initial Declaration
     timestr = time.strftime("%Y%m%d_%H%M%S_%p")
@@ -41,7 +42,7 @@ def main():
 
     # Connection Sequence
     step_num = 1
-    step_desc = "Launch SRO Application"
+    step_desc = "Launch Application"
     start = get_time()
     em.connect(cfg["default"]["host"])
     # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x00')
@@ -81,11 +82,11 @@ def main():
     step_num = 3
     step_desc = "Validate system"
     start = get_time()
-    em.fill_field(1, 2, 'GXMM', 8)
-    time.sleep(sleep_mode)
+    em.fill_field(1, 2, '<WHAT TO INPUT>', 8)
+    time.sleep(slow_mode)
     em.send_enter()
     time.sleep(wait_time)
-    # Application Load success/failure
+    # Application Load Success/Failure
     if em.string_found(1, 34, 'MAIN MENU'):
         print('Application load successful.')
         # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x00')
@@ -105,7 +106,7 @@ def main():
         step_num = 4
         step_desc = "Logout"
         start = get_time()
-        em.fill_field(21, 13, 'EX', 2)
+        em.fill_field(21, 13, '<INPUT>', 2)
         time.sleep(slow_mode)
         em.send_enter()
         time.sleep(wait_time)
@@ -123,17 +124,17 @@ def main():
             #     copy_logs()
             # else:
             #     pass
-            # sys.exit('Error: Script exited. Login not found.')
+            # sys.exit('Error: Script exited. Sign off error.')
 
         # - Terminate Application
         # Disconnect from host and kill subprocess
         step_num = 5
-        step_desc = "Terminate connection"
+        step_desc = "Terminate Connection"
         em.terminate()
         print("Connection Terminated.")
 
         metric_log(code)
-        # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x02')
+        # detail_log(timestr, step_num, step_desc, start_execution, end=get_time(), code='x02')
 
         if detail_log_list[1][5] == 'x00':
             detail_log_list.append([timestr, step_num, step_desc, start_execution, get_time(), 'x02'])
@@ -146,6 +147,9 @@ def main():
         if cfg["default"["execution_log"]] == 'ON':
             execution_log(timestr)
         elif cfg["default"]["execution_log"] == "OFF":
+            print('Execution og writing \'OFF')
+        
+        if cfg["default"["copy_logfile"]] == 'ON':
             print("Log copy feature is ON")
             copy_logs()
         else:
@@ -164,14 +168,12 @@ def main():
             count = 1
             detail_log_list_execption = ["Launch Application",
                                          "Login",
-                                         "Validate system",
+                                         "Validate System",
                                          "Logout"]
             for log in detail_log_list_execption:
                 detail_log(time_string, count, log, get_time(), get_time(), 'x01')
                 count += 1
-            detail_log(time_string, count, "Terminate connection", get_time(), get_time(), 'x03')
+            detail_log(time_string, count, "Terminate Connection", get_time(), get_time(), 'x03')
 
             print(e)
-
-
         
