@@ -2,7 +2,7 @@ import time
 import yaml
 
 
-# Method to write metric logs to file
+# Method to write metric logs to file.
 def metric_log(code):
     # Reading configuration file (Check config/config.yml)
     with open("config/config.yml", "r") as ymlfile:

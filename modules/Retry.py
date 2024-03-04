@@ -8,7 +8,7 @@ with open("../config/config.yml", "r") as ymlfile:
     cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
 
 # File name and location
-filename = '..\\logs\\Metric\\Metric_Logs.txt'
+filename = '..\\logs\\Metric\\Metric_Log.txt'
 tmp_filename = '..\\tmp\\retry_count.txt'
 
 with open(filename, 'r') as file:

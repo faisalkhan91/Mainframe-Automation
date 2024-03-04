@@ -7,13 +7,13 @@ def build_time(time_string):
     return datetime.combine(date.today(), datetime.strptime(time_string, "%m/%d/%y %H:%M:%S %p").time())
 
 
-# Method to write detail logs to file
+# Method to write detail logs to the log file.
 def detail_log(timestr, step_num, step_desc, start, end, code):
     # Reading configuration file (Check config/config.yml)
-    with open ("config/config.yml", "r") as ymlfile:
+    with open("config/config.yml", "r") as ymlfile:
         cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
     
-    # File name and location
+    # Filename and location
     filename = cfg["logs"]["detail"] + cfg["files"]["detail_filename"] + timestr + '.txt'
 
     # Log Parameters
@@ -50,22 +50,22 @@ def detail_log(timestr, step_num, step_desc, start, end, code):
         file.write(print_log)
         file.write('\n')
     
-    '''
-    - Below is the standard log format representation.
+'''
+- Below is the standard log format representation.
 
-    App name,STEP,1,Generic step description,00/00/2020 00:00:00 AM,00/00/2020 0.00:00:00 AM,PASS
-    App name,STEP,2,Generic step description,00/00/2020 00:00:00 AM,00/00/2020 0.00:00:00 AM,PASS
-    App name,STEP,3,Generic step description,00/00/2020 00:00:00 AM,00/00/2020 0.00:00:00 AM,PASS
-    App name,STEP,4,Generic step description,00/00/2020 00:00:00 AM,00/00/2020 0.00:00:00 AM,PASS
-    App name,SUMMARY,n/a,n/a,00/00/2020 00:00:00 AM,00/00/2020 0.00:00:00 AM, PASS
+App name,STEP,1,Generic step description,00/00/2024 00:00:00 AM,00/00/2024 0.00:00:00 AM,PASS
+App name,STEP,2,Generic step description,00/00/2024 00:00:00 AM,00/00/2024 0.00:00:00 AM,PASS
+App name,STEP,3,Generic step description,00/00/2024 00:00:00 AM,00/00/2024 0.00:00:00 AM,PASS
+App name,STEP,4,Generic step description,00/00/2024 00:00:00 AM,00/00/2024 0.00:00:00 AM,PASS
+App name,SUMMARY,n/a,n/a,00/00/2024 00:00:00 AM,00/00/2024 0.00:00:00 AM,PASS
 
-    Generic step description examples to use consistently across the board:
+Generic step description examples to use consistently across the board:
 
-    Landing Page
-    Authorization
-    Retrieve Content
-    Login
-    Logout
-    Launch such and such
-    Validate such and such
-    '''
+Landing Page
+Authorization
+Retrieve Content
+Login
+Logout
+Launch such and such
+Validate such and such
+'''

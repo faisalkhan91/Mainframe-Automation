@@ -140,10 +140,38 @@ def main():
         elif detail_log_list[1][5] == 'x01':
             detail_log_list.append([timestr, step_num, step_desc, start_execution, get_time(), 'x03'])
 
-        for dlog in default_log_list:
+        for dlog in detail_log_list:
             detail_log(dlog[0], dlog[1], dlog[2], dlog[3], dlog[4], dlog[5])
         
         if cfg["default"["execution_log"]] == 'ON':
-            execution_log(time)
+            execution_log(timestr)
+        elif cfg["default"]["execution_log"] == "OFF":
+            print("Log copy feature is ON")
+            copy_logs()
+        else:
+            # pass
+            print("Log copy feature is OFF")
+
+    
+    # Main Program
+    if __name__ == "__main__":
+        try:
+            main()
+        except Exception as e:
+            metric_log(code='x01')
+
+            time_string = time.strftime("%Y%m%d_%H%M%S_%p")
+            count = 1
+            detail_log_list_execption = ["Launch Application",
+                                         "Login",
+                                         "Validate system",
+                                         "Logout"]
+            for log in detail_log_list_execption:
+                detail_log(time_string, count, log, get_time(), get_time(), 'x01')
+                count += 1
+            detail_log(time_string, count, "Terminate connection", get_time(), get_time(), 'x03')
+
+            print(e)
+
 
         
