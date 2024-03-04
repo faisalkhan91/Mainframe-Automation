@@ -66,3 +66,84 @@ def main():
         print('Login successful.')
         # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x00')
         detail_log_list.append([timestr, step_num, step_desc, start, get_time(), 'x00'])
+    elif not em.string_found(5, 30, 'SIGNON OK'):
+        # metric_log(code='x01')
+        # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x01')
+        code = 'x01'
+        detail_log_list.append([timestr, step_num, step_desc, start, get_time(), 'x01'])
+        # if cfg["default"]["copy_logfile"] == 'ON':
+        #     copy_logs()
+        # else:
+        #     pass
+        # sys.exit('Error: Script exited. Login not found.')
+
+    # - Perform Operation
+    step_num = 3
+    step_desc = "Validate system"
+    start = get_time()
+    em.fill_field(1, 2, 'GXMM', 8)
+    time.sleep(sleep_mode)
+    em.send_enter()
+    time.sleep(wait_time)
+    # Application Load success/failure
+    if em.string_found(1, 34, 'MAIN MENU'):
+        print('Application load successful.')
+        # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x00')
+        detail_log_list.append([timestr, step_num, step_desc, start, get_time(), 'x00'])
+    elif not em.string_found(1, 34, 'MAIN MENU'):
+        # metric_log(code='x01')
+        # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x01')
+        code = 'x01'
+        detail_log_list.append([timestr, step_num, step_desc, start, get_time(), 'x01'])
+        # if cfg["default"]["copy_logfile"] == 'ON':
+        #     copy_logs()
+        # else:
+        #     pass
+        # sys.exit('Error: Script exited. Login not found.')
+    
+    # - Logout
+        step_num = 4
+        step_desc = "Logout"
+        start = get_time()
+        em.fill_field(21, 13, 'EX', 2)
+        time.sleep(slow_mode)
+        em.send_enter()
+        time.sleep(wait_time)
+        # Sign off search
+        if em.string_found(24, 1, 'ENTER APPLICATION NAME'):
+            print('Logout successful.')
+            # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x00')
+            detail_log_list.append([timestr, step_num, step_desc, start, get_time(), 'x00'])
+        elif not em.string_found(24, 1, 'ENTER APPLICATION NAME'):
+            # metric_log(code='x01')
+            # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x01')
+            code = 'x01'
+            detail_log_list.append([timestr, step_num, step_desc, start, get_time(), 'x01'])
+            # if cfg["default"]["copy_logfile"] == 'ON':
+            #     copy_logs()
+            # else:
+            #     pass
+            # sys.exit('Error: Script exited. Login not found.')
+
+        # - Terminate Application
+        # Disconnect from host and kill subprocess
+        step_num = 5
+        step_desc = "Terminate connection"
+        em.terminate()
+        print("Connection Terminated.")
+
+        metric_log(code)
+        # detail_log(timestr, step_num, step_desc, start, end=get_time(), code='x02')
+
+        if detail_log_list[1][5] == 'x00':
+            detail_log_list.append([timestr, step_num, step_desc, start_execution, get_time(), 'x02'])
+        elif detail_log_list[1][5] == 'x01':
+            detail_log_list.append([timestr, step_num, step_desc, start_execution, get_time(), 'x03'])
+
+        for dlog in default_log_list:
+            detail_log(dlog[0], dlog[1], dlog[2], dlog[3], dlog[4], dlog[5])
+        
+        if cfg["default"["execution_log"]] == 'ON':
+            execution_log(time)
+
+        
