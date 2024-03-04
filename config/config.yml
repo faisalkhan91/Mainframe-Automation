@@ -1,16 +1,18 @@
+# This file contains the parameters used to connect and store the log files.
+
 # Default Settings
 default:
-    host: 'wdc3270'
-    system: ''
+    host: '<HOSTNAME>'
+    system: '<MAINFRAME SYSTEM>'
     wait: 1
-    mode: 'Slow'  # Default: Normal, Use 'Slow' for slower execution
-    copy_logfile: 'OFF'  # Use 'ON' to enable log copy function
-    execution_log: 'ON'  # Use 'OFF" to disable writing of execution logs
+    mode: 'Slow'  # Default: Normal, use 'Slow' for slower execution.
+    copy_logfile: 'OFF'  # Use 'ON' to enable log copy function.
+    execution_log: 'ON'  # Use 'OFF" to disable writing of execution logs.
 
 # Authorization
 credentials:
-    user: USER
-    password: PASSWORD
+    user: <USER>
+    password: <PASSWORD>
 
 # Log file directory
 logs:
@@ -20,10 +22,10 @@ logs:
 
 # Log filename, e.g. '\\XXXXXXX'
 files:
-    metric_filename: '\\Metric_Logs'
-    detail_filename: '\\Detailed_Logs_'
-    execution_filename: '\\Script_Execution_'
+    metric_filename: '\\Metric_Log'
+    detail_filename: '\\Detailed_Log_'
+    execution_filename: '\\Script_Execution_Log_'
 
 # Detail log configuration
 detail:
-    app_name: 'Example'
+    app_name: '<APPLICATION NAME>'
