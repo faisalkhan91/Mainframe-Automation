@@ -8,12 +8,13 @@ from modules.MetricLog import *
 from modules.DetailLog import *
 from modules.ExecutionLog import *
 from modules.LogCopy import *
-#from modules.Retry import *
+# from modules.Retry import *
 
 
 def get_time():
     return datetime.now().strftime("%m/%d/%y %H:%M:%S %p")
     # return time.strftime("%m/%d/%y %H:%M:%S %p", time.localtime())  # Using time
+
 
 def set_mode(cfg):
     if cfg["default"]["mode"] == 'Normal':
@@ -21,13 +22,14 @@ def set_mode(cfg):
     elif cfg["default"]["mode"] == 'Slow':
         return 2
 
+
 def main():
     # Read config file
     with open("config/config.yml", "r") as ymlfile:
         cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
-    
+
     # raise ValueError('A very specific bad thing happened.')  # To raise exception for testing.
-        
+
     # Initial Declaration
     timestr = time.strftime("%Y%m%d_%H%M%S_%p")
     start_execution = get_time()
@@ -101,8 +103,8 @@ def main():
         # else:
         #     pass
         # sys.exit('Error: Script exited. Login not found.')
-    
-    # - Logout
+
+        # - Logout
         step_num = 4
         step_desc = "Logout"
         start = get_time()
@@ -143,12 +145,12 @@ def main():
 
         for dlog in detail_log_list:
             detail_log(dlog[0], dlog[1], dlog[2], dlog[3], dlog[4], dlog[5])
-        
+
         if cfg["default"["execution_log"]] == 'ON':
             execution_log(timestr)
         elif cfg["default"]["execution_log"] == "OFF":
             print('Execution og writing \'OFF')
-        
+
         if cfg["default"["copy_logfile"]] == 'ON':
             print("Log copy feature is ON")
             copy_logs()
@@ -156,7 +158,6 @@ def main():
             # pass
             print("Log copy feature is OFF")
 
-    
     # Main Program
     if __name__ == "__main__":
         try:
@@ -166,14 +167,13 @@ def main():
 
             time_string = time.strftime("%Y%m%d_%H%M%S_%p")
             count = 1
-            detail_log_list_execption = ["Launch Application",
+            detail_log_list_exception = ["Launch Application",
                                          "Login",
                                          "Validate System",
                                          "Logout"]
-            for log in detail_log_list_execption:
+            for log in detail_log_list_exception:
                 detail_log(time_string, count, log, get_time(), get_time(), 'x01')
                 count += 1
             detail_log(time_string, count, "Terminate Connection", get_time(), get_time(), 'x03')
 
             print(e)
-        

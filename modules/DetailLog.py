@@ -49,7 +49,8 @@ def detail_log(timestr, step_num, step_desc, start, end, code):
         
         file.write(print_log)
         file.write('\n')
-    
+
+
 '''
 - Below is the standard log format representation.
 
